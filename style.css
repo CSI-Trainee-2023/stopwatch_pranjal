@@ -1,0 +1,23 @@
+*{
+    background-color: rgb(43, 43, 76);
+    text-align: center;
+}
+.ctr{
+    margin-top: 200px;
+    font-size: 150px;
+    color: silver;
+}
+.btn{
+    font-size: 50px;
+    border: black solid 2px;
+}
+#lap{
+    margin-top: 50px;
+    margin-right: 200px;
+    color:brown;
+    background-color: aqua;
+}
+#start{
+    color: green;
+    background-color: red;
+}
