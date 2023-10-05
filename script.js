@@ -10,6 +10,7 @@ let b=document.getElementById("hr");
 let c=document.getElementById("min");
 let d=document.getElementById("sec");
 let e=document.getElementById("ms");
+let f=document.getElementById("lp");
 x.addEventListener("click", strt);
 y.addEventListener("click", lp);
 function strt(){
@@ -41,6 +42,8 @@ function reset(){
 function lp(){
     let str=hr+':'+min+':'+sec+':'+ct;
     localStorage.setItem("lap",str);
+    let a=localStorage.getItem('lap');
+    f.innerHTML=a;
 }
 
 
