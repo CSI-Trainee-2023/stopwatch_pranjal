@@ -56,7 +56,12 @@ function reset(){
     minute.innerHTML="00";
     second.innerHTML="00";
     msecond.innerHTML="00";
-    lapctr.innerHTML="00:00:00";
+    lapctr.innerHTML="";
+    localStorage.clear();
+    while(laparr.length>0)
+    {
+        laparr.pop();
+    }
     laps.addEventListener("click",lp);
     laps.removeEventListener("click",reset);
 }
@@ -64,8 +69,8 @@ function lp(){
     let str=hr+':'+min+':'+sec+':'+ctr;
     laparr.push(str);
     localStorage.setItem("lap",laparr);
-    let a=localStorage.getItem('lap');
-    lapctr.innerHTML=a;
+    lapctr.innerHTML+=str;
+    lapctr.innerHTML+="<br>";
 }
 
 
