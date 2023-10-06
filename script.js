@@ -1,61 +1,83 @@
 var hr=0;
 var min=0;
 var sec=0;
-var ct=0;
-var st=0;
+var ctr=0;
+var sts=0;
 
-let x=document.getElementById("start");
-let y=document.getElementById("lap");
-let b=document.getElementById("hr");
-let c=document.getElementById("min");
-let d=document.getElementById("sec");
-let e=document.getElementById("ms");
-let f=document.getElementById("lp");
-x.addEventListener("click", strt);
-y.addEventListener("click", lp);
+let laparr=[];
+let starts=document.getElementById("start");
+let laps=document.getElementById("lap");
+let hour=document.getElementById("hr");
+let minute=document.getElementById("min");
+let second=document.getElementById("sec");
+let msecond=document.getElementById("ms");
+let lapctr=document.getElementById("lp");
+starts.addEventListener("click", strt);
+laps.addEventListener("click",lp);
 function strt(){
-    x.innerHTML="Stop";
-    st=1;
-    tr();
+    starts.innerHTML="Stop";
+    sts=1;
+    timer();
+    starts.addEventListener("click",stop)
+    laps.addEventListener("click",lp);
+    starts.removeEventListener("click",strt)
+}
+
+function stop(){
+    starts.innerHTML="Resume";
+    laps.innerHTML="Reset";
+    sts=0;
+    timer();
+    starts.addEventListener("click",resume);
+    laps.addEventListener("click",reset);
+    starts.removeEventListener("click",stop);
 }
 
 function resume(){
-    y.innerHTML="Lap";
-    x.innerHTML="Stop";
-    st=1;
-    tr();
+    laps.innerHTML="Lap";
+    starts.innerHTML="Stop";
+    sts=1;
+    starts.addEventListener("click",stop)
+    laps.addEventListener("click",lp);
+    laps.removeEventListener("click",reset);
+    starts.removeEventListener("click",resume);
+    timer();
 }
 
 function reset(){
-    y.innerHTML="Lap";
-    x.innerHTML="Start";
-    st=0;
+    laps.innerHTML="Lap";
+    starts.innerHTML="Start";
+    sts=0;
     hr=0;
     min=0;
     sec=0;
-    ct=0;
-    b.innerHTML="00";
-    c.innerHTML="00";
-    d.innerHTML="00";
-    e.innerHTML="00";
+    ctr=0;
+    hour.innerHTML="00";
+    minute.innerHTML="00";
+    second.innerHTML="00";
+    msecond.innerHTML="00";
+    lapctr.innerHTML="00:00:00";
+    laps.addEventListener("click",lp);
+    laps.removeEventListener("click",reset);
 }
 function lp(){
-    let str=hr+':'+min+':'+sec+':'+ct;
-    localStorage.setItem("lap",str);
+    let str=hr+':'+min+':'+sec+':'+ctr;
+    laparr.push(str);
+    localStorage.setItem("lap",laparr);
     let a=localStorage.getItem('lap');
-    f.innerHTML=a;
+    lapctr.innerHTML=a;
 }
 
 
 
-function tr(){
-    if(st==1)
+function timer(){
+    if(sts==1)
     {
-        ct=ct+1;
-        if(ct==100)
+        ctr=ctr+1;
+        if(ctr==100)
         {
             sec=sec+1;
-            ct=0;
+            ctr=0;
         }
         if(sec==60)
         {
@@ -68,21 +90,10 @@ function tr(){
             min=0;
             sec=0;
         }
-        b.innerHTML=hr;
-        c.innerHTML=min;
-        d.innerHTML=sec;
-        e.innerHTML=ct;
-        setTimeout("tr()", 10);
-        x.addEventListener("click", function (){
-            y.innerHTML="Reset";
-            x.innerHTML="Resume";
-            st=0;
-            tr();
-        });
-        y.addEventListener("click", lp)
-    }
-    else{
-        x.addEventListener("click", resume);
-        y.addEventListener("click", reset);
+        hour.innerHTML=hr;
+        minute.innerHTML=min;
+        second.innerHTML=sec;
+        msecond.innerHTML=ctr;
+        setTimeout("timer()", 10);
     }
 }
